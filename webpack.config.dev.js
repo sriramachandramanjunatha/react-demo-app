@@ -7,7 +7,7 @@ export default {
     output: {
         path:'/',
         filename: 'bundle.js',
-        publicPath: '/'    
+        publicPath: '/'
     },
     plugins:[
         new webpack.NoEmitOnErrorsPlugin(),
@@ -18,7 +18,10 @@ export default {
         rules:[
             {
                 test: /\.js$/,
-                include:path.join(__dirname,'client'),
+                include:[
+                  path.join(__dirname,'client'),
+                  path.join(__dirname,'server/shared'),
+                ],
                 use: [{
 
                     loader:'babel-loader',
