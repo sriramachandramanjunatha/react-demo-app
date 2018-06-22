@@ -14,7 +14,8 @@ class SignUpForm extends React.Component{
             email:'',
             password:'',
             passwordConfirmation:'',
-            timezone:''
+            timezone:'',
+            errors:{}
         }
 
 
@@ -29,18 +30,28 @@ class SignUpForm extends React.Component{
 
 
     onSubmit(e){
+      this.setState({ errors:{} })
         e.preventDefault();
         console.log(this.state)
         // axios.post('/api/users',{user:this.state})
 
 
-        this.props.userSignupRequest(this.state)
+        this.props.userSignupRequest(this.state).then(
+            () => {},
+            // ( { data } ) => this.setState({errors: data})
+
+            (data) => this.setState({ errors: data.response.data })
+        )
+        // console.log({ errors });
+        console.log(this.state);
     }
     render(){
-
+      const { errors } = this.state;
+      // console.log(errors);
+      // console.log(this.state);
       const options = map(timezones,(val,key)=><option key={val} value={val}>{key}
-      </option>
-    );
+                      </option>
+                      );
         return (
             <form onSubmit={this.onSubmit}>
 
@@ -52,7 +63,7 @@ class SignUpForm extends React.Component{
                     <label className="control-label">Username</label>
 
                     <input value={this.state.username} onChange={this.onChange} type="text" name="username" className="form-control"/>
-
+                    {errors.username && <span className="help-block">{errors.username}</span>}
                 </div>
 
                 <div className="form-group">
@@ -60,7 +71,7 @@ class SignUpForm extends React.Component{
                     <label className="control-label">Email</label>
 
                     <input value={this.state.email} onChange={this.onChange} type="text" name="email" className="form-control"/>
-
+                    {errors.email && <span className="help-block">{errors.email}</span>}
                 </div>
 
 
@@ -69,7 +80,7 @@ class SignUpForm extends React.Component{
                     <label className="control-label">Password</label>
 
                     <input value={this.state.password} onChange={this.onChange} type="password" name="password" className="form-control"/>
-
+                    {errors.password && <span className="help-block">{errors.password}</span>}
                 </div>
 
                 <div className="form-group">
@@ -77,7 +88,7 @@ class SignUpForm extends React.Component{
                     <label className="control-label">Password Confirmation</label>
 
                     <input value={this.state.passwordConfirmation} onChange={this.onChange} type="password" name="passwordConfirmation" className="form-control"/>
-
+                    {errors.passwordConfirmation && <span className="help-block">{errors.passwordConfirmation}</span>}
                 </div>
 
                 <div className="form-group">
@@ -90,6 +101,7 @@ class SignUpForm extends React.Component{
                         <option value="" disabled>Choose Your Timezone</option>
                         {options}
                     </select>
+                    {errors.timezone && <span className="help-block">{errors.timezone}</span>}
                     </div>
                 <div className="form-group">
                     <button className="btn btn-primary btn-lg">
