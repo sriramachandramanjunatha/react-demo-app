@@ -47,14 +47,18 @@ function validateInput(data){
     isValid: isEmpty(errors)
   }
 }
-router.post('/',(req, res) => {
 
+
+
+router.post('/',(req, res) => {
+// setTimeout(function () {
   const { errors, isValid } = validateInput(req.body)
 
   if(!isValid){
 
     res.status(400).json(errors);
   }
+  // }, 5000);
   console.log(req.body)
 })
 
