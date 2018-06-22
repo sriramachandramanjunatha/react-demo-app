@@ -14,7 +14,7 @@ export default function validateInput(data){
     errors.email = 'This is required field'
   }
 
-  if(Validator.isEmail(data.email)){
+  if(!Validator.isEmail(data.email)){
 
     errors.email = 'Email is invalid'
   }

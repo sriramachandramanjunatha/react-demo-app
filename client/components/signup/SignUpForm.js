@@ -2,10 +2,11 @@ import React from "react";
 import timezones from "../../data/timezones"
 import map from "lodash/map";
 import validateInput from '../../../server/shared/validations/signup'
-
+import PropTypes from 'prop-types';
 // import axios from 'axios';
 import classnames from 'classnames'
 
+import { browserHistory } from 'react-router'
 import TextFieldGroup from '../common/TextFieldGroup'
 class SignUpForm extends React.Component{
 
@@ -51,7 +52,10 @@ class SignUpForm extends React.Component{
           this.setState({ errors:{},isLoading:true })
 
           this.props.userSignupRequest(this.state).then(
-              () => {},
+              () => {
+              // browserHistory.push('/')
+              this.context.router.push('/')
+            },
               // ( { data } ) => this.setState({errors: data})
 
               (data) => this.setState({ errors: data.response.data,isLoading:false })
@@ -132,8 +136,12 @@ class SignUpForm extends React.Component{
 }
 
 
-// SignUpForm.propTypes={
-//   userSignupRequest: React.PropTypes.func.isRequired
-// }
+SignUpForm.propTypes={
+  userSignupRequest: PropTypes.func.isRequired
+}
+
+SignUpForm.contextTypes={
+  router: PropTypes.object.isRequired
+}
 
 export default SignUpForm;

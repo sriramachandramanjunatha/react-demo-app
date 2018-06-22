@@ -13,8 +13,9 @@ router.post('/',(req, res) => {
 // setTimeout(function () {
   const { errors, isValid } = validateInput(req.body)
 
-  if(!isValid){
-
+  if(isValid){
+    res.json({success:true})
+  }else {
     res.status(400).json(errors);
   }
   // }, 5000);
